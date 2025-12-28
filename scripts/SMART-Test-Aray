@@ -1,0 +1,61 @@
+#!/bin/bash
+################################################################################
+# SMART Automated Test + Report + Unraid Notification
+################################################################################
+
+# Test type: short or long
+TEST_TYPE="short"    # options: short long
+
+# Report output folder
+REPORT_DIR="/mnt/user/Syslog/smart"
+mkdir -p "$REPORT_DIR"
+
+REPORT_FILE="$REPORT_DIR/smart_$(date +%Y-%m-%d_%H-%M-%S).txt"
+
+echo "### SMART REPORT $(date) ###" > "$REPORT_FILE"
+echo "Test Type: $TEST_TYPE" >> "$REPORT_FILE"
+echo "" >> "$REPORT_FILE"
+
+# Loop all disks except flash
+for disk in /dev/sd?; do
+    # Skip boot USB if detected
+    if [[ "$disk" == "/dev/sdX" ]]; then
+        continue
+    fi
+
+    echo "Starting SMART $TEST_TYPE test on $disk" | tee -a "$REPORT_FILE"
+    smartctl -t $TEST_TYPE $disk > /dev/null 2>&1
+
+    # Wait depending on test type
+    if [ "$TEST_TYPE" == "short" ]; then
+        sleep 120
+    else
+        sleep 1800
+    fi
+
+    echo "Collecting SMART results for $disk" | tee -a "$REPORT_FILE"
+    smartctl -H -A -l selftest $disk >> "$REPORT_FILE"
+    echo "" >> "$REPORT_FILE"
+done
+
+# Evaluate if any FAILS
+if grep -q "FAIL" "$REPORT_FILE"; then
+    STATUS="Disk SMART warnings detected"
+    SEVERITY="alert"
+else
+    STATUS="All disks passed SMART test"
+    SEVERITY="normal"
+fi
+
+# Unraid GUI Notification
+/usr/local/emhttp/webGui/scripts/notify \
+    -e "SMART Test Report" \
+    -s "$STATUS" \
+    -d "SMART test completed. Review report stored at: $REPORT_FILE" \
+    -i "$SEVERITY"
+
+# Email formatting (works when email is later configured)
+echo "$STATUS" | mail -s "Unraid SMART Test Report $(date)" root
+
+echo "SMART Test completed. Report saved as:"
+echo "$REPORT_FILE"
