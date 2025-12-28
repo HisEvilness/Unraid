@@ -12,9 +12,13 @@ This repository includes (but is not limited to):
 - Prometheus
 - Grafana dashboards
 - Exporters (Node, Arr stack, AdGuard, Statping, etc.)
+
 ⚙️ Unraid automation scripts
+
 🛡️ Operational hardening & tuning
+
 🔍 Diagnostics, maintenance & performance analysis
+
 🧩 Future Unraid-specific projects
 
 🎯 Primary goal:
@@ -27,17 +31,21 @@ This repository follows explicit operational principles.
 
 🔒 Production-oriented
 - Everything in this repository is actively used on a running Unraid system.
+
 🧩 Modular by design
 - Dashboards, scripts, and configs are separated by function, not mixed for convenience.
+
 📜 Auditable
 - Every change is:
 -- Reviewable
 -- Explainable
 -- Reproducible
+
 ⚡ Low-impact by default
 - Monitoring and automation are tuned to:
 -- Avoid unnecessary IO
 -- Minimize CPU wakeups
 -- Prevent metric explosion
+
 📈 Expandable
 - New projects can be added without restructuring the repository.
