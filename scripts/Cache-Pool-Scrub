@@ -1,0 +1,27 @@
+#!/bin/bash
+# Unraid Automated BTRFS Scrub Script 2025
+# Runs scrub on all BTRFS pools and notifies on completion
+
+LOGFILE="/var/log/btrfs-scrub-$(date +%Y%m%d).log"
+echo "### BTRFS SCRUB STARTED $(date) ###" | tee -a $LOGFILE
+
+# Get list of mounted BTRFS filesystems
+mount | grep btrfs | awk '{print $3}' | while read -r pool; do
+    echo "Scrubbing filesystem at: $pool" | tee -a $LOGFILE
+    /sbin/btrfs scrub start -Bd "$pool" | tee -a $LOGFILE
+
+    status=$(/sbin/btrfs scrub status "$pool")
+    echo "$status" | tee -a $LOGFILE
+
+    # Check for errors
+    if echo "$status" | grep -q "errors: [1-9]"; then
+        /usr/local/emhttp/webGui/scripts/notify -e "BTRFS Scrub" \
+        -s "Scrub Completed with ERRORS" -d "Pool: $pool" -i "alert"
+    else
+        /usr/local/emhttp/webGui/scripts/notify -e "BTRFS Scrub" \
+        -s "Scrub Completed Successfully" -d "Pool: $pool" -i "normal"
+    fi
+
+done
+
+echo "### BTRFS SCRUB COMPLETED $(date) ###" | tee -a $LOGFILE
