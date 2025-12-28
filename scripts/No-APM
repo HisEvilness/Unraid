@@ -1,0 +1,5 @@
+#!/bin/bash
+# WD Blue no spin down to prevent parking cycles
+# Useful if no head parking is allowed
+
+hdparm -S 0 /dev/sdb
