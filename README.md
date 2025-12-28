@@ -21,11 +21,12 @@ This repository includes (but is not limited to):
 
 🧩 Future Unraid-specific projects
 
+
 🎯 Primary goal:
-Operational clarity, reproducibility, and long-term maintainability — not one-off configuration dumps.
+- Operational clarity, reproducibility, and long-term maintainability — not one-off configuration dumps.
 
 🧭 Scope & Design Philosophy
-This repository follows explicit operational principles.
+- This repository follows explicit operational principles.
 
 ✅ Core principles
 
