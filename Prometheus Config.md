@@ -23,7 +23,6 @@ They are **not Prometheus flags**.
 
 **Example:**
 
-```bash
 --user 99:100
 
 ### 1.2 Post Arguments (Prometheus runtime flags)
@@ -33,7 +32,7 @@ They directly control Prometheus runtime behavior.
 
 **Baseline flags used:**
 
-```bash
+
 --config.file=/etc/prometheus/prometheus.yml
 --storage.tsdb.path=/prometheus/data
 --storage.tsdb.retention.time=180d
@@ -46,7 +45,6 @@ This section documents the baseline Prometheus scrape configuration.
 
 ### 2.1 Global settings
 
-```yaml
 global:
   scrape_interval: 15s
   evaluation_interval: 15s
@@ -56,7 +54,6 @@ global:
 
 Replace placeholders with your actual hostnames, IP addresses, and ports.
 
-```yaml
 scrape_configs:
 
   # ========================================================
@@ -116,7 +113,6 @@ endpoint for Prometheus.
 
 > **Important:** Setting `detailed: true` significantly increases metric cardinality and TSDB growth.
 
-```yaml
 sonarr:
   url: http://<SONARR_HOST>:8989
   api_key: <REDACTED_API_KEY>
@@ -160,14 +156,12 @@ This section provides the baseline arguments as used in Unraid, ready for direct
 
 These parameters are applied at the Docker runtime level.
 
-```bash
 --user 99:100
 
 ### 4.2 Post Arguments (Unraid)
 
 These arguments are passed to the Prometheus process inside the container.
 
-```bash
 --config.file=/etc/prometheus/prometheus.yml
 --storage.tsdb.path=/prometheus/data
 --storage.tsdb.retention.time=180d
