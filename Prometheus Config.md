@@ -56,38 +56,33 @@ Replace placeholders with your actual hostnames, IP addresses, and ports.
 
 scrape_configs:
 
-  # ========================================================
-  # PROMETHEUS SELF + UNRAID NODE EXPORTER
-  # ========================================================
-  - job_name: "prometheus"
+   ### PROMETHEUS SELF + UNRAID NODE EXPORTER
+    - job_name: "prometheus"
     scrape_interval: 10s
     static_configs:
       - targets:
           - "localhost:9090"
           - "<UNRAID_HOST>:9100"
 
-  # ========================================================
-  # ADGUARD HOME EXPORTER
-  # ========================================================
+  ### ADGUARD HOME EXPORTER
+  
   - job_name: "adguard"
     scrape_interval: 15s
     static_configs:
       - targets:
           - "<ADGUARD_EXPORTER_HOST>:9617"
 
-  # ========================================================
-  # SCRAPARR (Arr stack exporter)
-  # OPERATIONAL MODE – NO PER-MEDIA METRICS
-  # ========================================================
+  ### SCRAPARR (Arr stack exporter)
+  #### OPERATIONAL MODE – NO PER-MEDIA METRICS
+ 
   - job_name: "scraparr"
     scrape_interval: 30s
     static_configs:
       - targets:
           - "<SCRAPARR_HOST>:7100"
 
-  # ========================================================
-  # STATPING (AUTHENTICATED)
-  # ========================================================
+  ### STATPING (AUTHENTICATED)
+ 
   - job_name: "statping"
     scrape_interval: 15s
     metrics_path: "/metrics"
@@ -96,15 +91,14 @@ scrape_configs:
       - targets:
           - "<STATPING_HOST>:8366"
 
-  # ========================================================
-  # CLOUDFLARE EXPORTER (DISABLED / PARKED)
-  # ========================================================
-  # - job_name: "cloudflare"
-  #   scrape_interval: 30s
-  #   static_configs:
-  #     - targets:
-  #         - "<CLOUDFLARE_EXPORTER_HOST>:<PORT>"
-  #   honor_labels: true
+  ### CLOUDFLARE EXPORTER (DISABLED / PARKED)
+ 
+  - job_name: "cloudflare"
+    scrape_interval: 30s
+    static_configs:
+      - targets:
+          - "<CLOUDFLARE_EXPORTER_HOST>:<PORT>"
+    honor_labels: true
 
 ## 3. Scraparr configuration
 
