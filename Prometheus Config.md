@@ -57,12 +57,13 @@ Replace placeholders with your actual hostnames, IP addresses, and ports.
 scrape_configs:
 
    ### PROMETHEUS SELF + UNRAID NODE EXPORTER
-    - job_name: "prometheus"
-    scrape_interval: 10s
-    static_configs:
-      - targets:
-          - "localhost:9090"
-          - "<UNRAID_HOST>:9100"
+   
+   - job_name: "prometheus"
+     scrape_interval: 10s
+     static_configs:
+       - targets:
+           - "localhost:9090"
+           - "<UNRAID_HOST>:9100"
 
   ### ADGUARD HOME EXPORTER
   
@@ -107,35 +108,35 @@ endpoint for Prometheus.
 
 > **Important:** Setting `detailed: true` significantly increases metric cardinality and TSDB growth.
 
-sonarr:
+- sonarr:
   url: http://<SONARR_HOST>:8989
   api_key: <REDACTED_API_KEY>
   api_version: v3
   interval: 30
   detailed: true
 
-radarr:
+- radarr:
   url: http://<RADARR_HOST>:7878
   api_key: <REDACTED_API_KEY>
   api_version: v3
   interval: 30
   detailed: true
 
-prowlarr:
+- prowlarr:
   url: http://<PROWLARR_HOST>:9696
   api_key: <REDACTED_API_KEY>
   api_version: v1
   interval: 30
   detailed: true
 
-lidarr:
+- lidarr:
   url: http://<LIDARR_HOST>:8686
   api_key: <REDACTED_API_KEY>
   api_version: v3
   interval: 30
   detailed: true
 
-overseerr:
+- overseerr:
   url: http://<OVERSEERR_HOST>:5055
   api_key: <REDACTED_API_KEY>
   api_version: v3
