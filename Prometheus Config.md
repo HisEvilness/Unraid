@@ -1,4 +1,4 @@
-# Prometheus Configuration Reference (Unraid)
+# 📊Prometheus Configuration Reference (Unraid)
 
 This document captures the **baseline Prometheus + exporters configuration** used in this repository for Unraid, including:
 
@@ -11,7 +11,7 @@ This document captures the **baseline Prometheus + exporters configuration** use
 
 ---
 
-## 1. Unraid Docker Template: Extra Parameters vs Post Arguments
+## 🧠1. Unraid Docker Template: Extra Parameters vs Post Arguments
 
 Unraid’s Docker template separates runtime options into **two distinct layers**.  
 Understanding this separation is critical to avoid misconfiguration.
@@ -36,7 +36,7 @@ Using runtime behaviour for Prometheus requires that paths be set.
 --config.file=/etc/prometheus/prometheus.yml
 --storage.tsdb.path=/prometheus/data
 ```
-## 2. Prometheus `prometheus.yml`
+## 🎯2. Prometheus `prometheus.yml`
 
 This section documents the baseline Prometheus scrape configuration.
 
@@ -98,7 +98,7 @@ scrape_configs:
           - "<CLOUDFLARE_EXPORTER_HOST>:<PORT>"
     honor_labels: true
 ```
-## 3. Scraparr configuration
+## ⚙️3. Scraparr configuration
 
 This Scraparr configuration is used to query Arr applications and expose a single `/metrics`
 endpoint for Prometheus.
@@ -140,7 +140,7 @@ endpoint for Prometheus.
   interval: 30
   detailed: true
 ```
-## 4. Baseline runtime arguments
+## ⚡4. Baseline runtime arguments
 
 This section provides the baseline arguments as used in Unraid, ready for direct reuse.
 
@@ -166,7 +166,7 @@ These arguments are passed to the Prometheus process inside the container.
 --storage.tsdb.retention.size=40GB
 --storage.tsdb.wal-compression
 ```
-## 5. Practical retention guidance (fit-for-purpose)
+## 🔍5. Practical retention guidance (fit-for-purpose)
 
 Prometheus TSDB growth is primarily driven by:
 
@@ -183,7 +183,7 @@ Prometheus TSDB growth is primarily driven by:
 
 ---
 
-## 6. Security and hygiene
+## 📜6. Security and hygiene
 
 - Never commit real API keys or bearer tokens to version control.
 - Replace internal IP addresses and hostnames with placeholders before publishing.
@@ -192,7 +192,7 @@ Prometheus TSDB growth is primarily driven by:
 
 ---
 
-## 7. Scope boundary
+## 🧩7. Scope boundary
 
 This document covers **baseline Prometheus and exporter configuration only**.
 
