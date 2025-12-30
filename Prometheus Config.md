@@ -22,40 +22,37 @@ These parameters are passed **to Docker itself** and apply at the container runt
 They are **not Prometheus flags**.
 
 **Example:**
-
+```markdown
 --user 99:100
-
+```
 ### 1.2 Post Arguments (Prometheus runtime flags)
 
 These arguments are passed to the **Prometheus process inside the container** (entrypoint arguments).  
 They directly control Prometheus runtime behavior.
+Using runtime behaviour for Prometheus requires that paths be set.
 
 **Baseline flags used:**
-
-
+```markdown
 --config.file=/etc/prometheus/prometheus.yml
 --storage.tsdb.path=/prometheus/data
---storage.tsdb.retention.time=180d
---storage.tsdb.retention.size=40GB
---storage.tsdb.wal-compression
-
+```
 ## 2. Prometheus `prometheus.yml`
 
 This section documents the baseline Prometheus scrape configuration.
 
 ### 2.1 Global settings
-
+```ymal
 global:
   scrape_interval: 15s
   evaluation_interval: 15s
   scrape_timeout: 10s
-
+```
 ### 2.2 Scrape configurations
 
 Replace placeholders with your actual hostnames, IP addresses, and ports.
 
 scrape_configs:
-
+```yaml
    ### PROMETHEUS SELF + UNRAID NODE EXPORTER
    
    - job_name: "prometheus"
@@ -100,14 +97,14 @@ scrape_configs:
       - targets:
           - "<CLOUDFLARE_EXPORTER_HOST>:<PORT>"
     honor_labels: true
-
+```
 ## 3. Scraparr configuration
 
 This Scraparr configuration is used to query Arr applications and expose a single `/metrics`
 endpoint for Prometheus.
 
 > **Important:** Setting `detailed: true` significantly increases metric cardinality and TSDB growth.
-
+```yaml
 - sonarr:
   url: http://<SONARR_HOST>:8989
   api_key: <REDACTED_API_KEY>
@@ -142,7 +139,7 @@ endpoint for Prometheus.
   api_version: v3
   interval: 30
   detailed: true
-
+```
 ## 4. Baseline runtime arguments
 
 This section provides the baseline arguments as used in Unraid, ready for direct reuse.
@@ -150,19 +147,25 @@ This section provides the baseline arguments as used in Unraid, ready for direct
 ### 4.1 Extra Parameters (Unraid)
 
 These parameters are applied at the Docker runtime level.
-
+--user 99:100 Run the container as Unraid’s standard nobody:users to avoid permission issues on mounted volumes
+```markdown
 --user 99:100
-
+```
 ### 4.2 Post Arguments (Unraid)
 
 These arguments are passed to the Prometheus process inside the container.
-
+--config.file Path to Prometheus config file Unraid template typically mounts /etc/prometheus/.
+--storage.tsdb.path TSDB data directory must match your mounted data volume path.
+--storage.tsdb.retention.time Retention duration: Old data is deleted once it exceeds this.
+--storage.tsdb.retention.size Retention size cap TSDB is capped to this size.
+--storage.tsdb.wal-compression WAL compression reduces disk writes / IO amplification.
+```markdown
 --config.file=/etc/prometheus/prometheus.yml
 --storage.tsdb.path=/prometheus/data
 --storage.tsdb.retention.time=180d
 --storage.tsdb.retention.size=40GB
 --storage.tsdb.wal-compression
-
+```
 ## 5. Practical retention guidance (fit-for-purpose)
 
 Prometheus TSDB growth is primarily driven by:
