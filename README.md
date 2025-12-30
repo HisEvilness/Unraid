@@ -1,4 +1,4 @@
-🧠 Unraid – System Management, Monitoring & Automation
+# 🧠 Unraid – System Management, Monitoring & Automation
 📌 Overview
 
 Single source of truth for Unraid operations, observability, and automation
@@ -8,7 +8,7 @@ It is deliberately designed to support multiple independent but related componen
 
 This repository includes (but is not limited to):
 
-📊 System monitoring
+## 📊 System monitoring
 - Prometheus
 - Grafana dashboards
 - Exporters (Node, Arr stack, AdGuard, Statping, etc.)
@@ -22,7 +22,7 @@ This repository includes (but is not limited to):
 🧩 Future Unraid-specific projects
 
 
-🎯 Primary goal:
+## 🎯 Primary goal:
 - Operational clarity, reproducibility, and long-term maintainability — not one-off configuration dumps.
 
 🧭 Scope & Design Philosophy
